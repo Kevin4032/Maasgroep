@@ -1,3 +1,11 @@
 
 
+1. dotnet build
+2. dotnet ef database update
+3. Uitvoeren 'Maasgroep.Console'
 
+
+select * from receipts."Receipts";
+select * from receipts."Store";
+select * from receipts."CostCentre";
+select * from photos."Photos";

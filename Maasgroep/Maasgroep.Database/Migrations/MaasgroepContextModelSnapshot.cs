@@ -94,6 +94,9 @@ namespace Maasgroep.Database.Migrations
                     b.Property<long>("CostCentreId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("CostCentreId1")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -107,9 +110,13 @@ namespace Maasgroep.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CostCentreId");
+                    b.HasIndex("CostCentreId")
+                        .IsUnique();
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("CostCentreId1");
+
+                    b.HasIndex("StoreId")
+                        .IsUnique();
 
                     b.ToTable("Receipts", "receipts");
                 });
@@ -144,21 +151,37 @@ namespace Maasgroep.Database.Migrations
 
             modelBuilder.Entity("Maasgroep.Database.Receipt", b =>
                 {
+                    b.HasOne("Maasgroep.Database.CostCentre", null)
+                        .WithOne("Receipt")
+                        .HasForeignKey("Maasgroep.Database.Receipt", "CostCentreId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Maasgroep.Database.CostCentre", "CostCentre")
                         .WithMany()
-                        .HasForeignKey("CostCentreId")
+                        .HasForeignKey("CostCentreId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maasgroep.Database.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
+                        .WithOne("Receipt")
+                        .HasForeignKey("Maasgroep.Database.Receipt", "StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CostCentre");
 
                     b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("Maasgroep.Database.CostCentre", b =>
+                {
+                    b.Navigation("Receipt");
+                });
+
+            modelBuilder.Entity("Maasgroep.Database.Store", b =>
+                {
+                    b.Navigation("Receipt");
                 });
 #pragma warning restore 612, 618
         }

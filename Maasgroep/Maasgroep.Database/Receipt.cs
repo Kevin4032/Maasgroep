@@ -11,7 +11,9 @@ namespace Maasgroep.Database
 		[Column(TypeName = "decimal(18,2)")]
 		public decimal Amount { get; set; }
 		public Store Store { get; set; }
+		public long StoreId { get; set; } // Helaas nodig voor Foreign key Relationship
 		public CostCentre CostCentre { get; set; }
+		public long CostCentreId { get; set; } // Helaas nodig voor Foreign key Relationship
 		public DateTime? Approved { get; set; }
 		public string? Location { get; set; }//TODO: Kevin; GPS zie ik nog even niet vliegen?
 

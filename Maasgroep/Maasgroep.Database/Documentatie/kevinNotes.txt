@@ -1,0 +1,46 @@
+
+
+CREATE TABLE IF NOT EXISTS receipts."Receipts"
+(
+    "Id" bigint NOT NULL DEFAULT nextval('receipts."ReceiptsSeq"'::regclass),
+    "Created" timestamp with time zone NOT NULL DEFAULT now(),
+    "Amount" numeric(18,2) NOT NULL,
+    "StoreId" bigint,
+    "CostCentreId" bigint,
+    "Approved" timestamp with time zone,
+    "Location" text COLLATE pg_catalog."default",
+    CONSTRAINT "PK_Receipts" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Receipts_CostCentre_CostCentreId" FOREIGN KEY ("CostCentreId")
+        REFERENCES receipts."CostCentre" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_Receipts_Store_StoreId" FOREIGN KEY ("StoreId")
+        REFERENCES receipts."Store" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+no action bij nullable
+
+               constraints: table =>
+                {
+                    table.PrimaryKey("PK_Receipts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Receipts_CostCentre_CostCentreId",
+                        column: x => x.CostCentreId,
+                        principalSchema: "receipts",
+                        principalTable: "CostCentre",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Receipts_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalSchema: "receipts",
+                        principalTable: "Store",
+                        principalColumn: "Id");
+                });
+
+
+Deze gekkigheid
+The dependent side could not be determined for the one-to-one relationship between 'Receipt.Store' and 'Store'. To identify the dependent side of the relationship, configure the foreign key property. If these navigations should not be part of the same relationship, configure them independently via separate method chains in 'OnModelCreating'. See http://go.microsoft.com/fwlink/?LinkId=724062 for more details.
+
