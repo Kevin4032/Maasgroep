@@ -68,7 +68,6 @@ namespace Maasgroep.Database.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     Amount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     StoreId = table.Column<long>(type: "bigint", nullable: false),
-                    CostCentreId1 = table.Column<long>(type: "bigint", nullable: false),
                     CostCentreId = table.Column<long>(type: "bigint", nullable: false),
                     Approved = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Location = table.Column<string>(type: "text", nullable: true)
@@ -79,12 +78,6 @@ namespace Maasgroep.Database.Migrations
                     table.ForeignKey(
                         name: "FK_Receipts_CostCentre_CostCentreId",
                         column: x => x.CostCentreId,
-                        principalSchema: "receipts",
-                        principalTable: "CostCentre",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Receipts_CostCentre_CostCentreId1",
-                        column: x => x.CostCentreId1,
                         principalSchema: "receipts",
                         principalTable: "CostCentre",
                         principalColumn: "Id",
@@ -139,12 +132,6 @@ namespace Maasgroep.Database.Migrations
                 table: "Receipts",
                 column: "CostCentreId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Receipts_CostCentreId1",
-                schema: "receipts",
-                table: "Receipts",
-                column: "CostCentreId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Receipts_StoreId",

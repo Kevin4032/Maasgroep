@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Maasgroep.Database.Migrations
 {
     [DbContext(typeof(MaasgroepContext))]
-    [Migration("20230916140842_20230916_001_eersteOpzet")]
+    [Migration("20230916142024_20230916_001_eersteOpzet")]
     partial class _20230916_001_eersteOpzet
     {
         /// <inheritdoc />
@@ -97,9 +97,6 @@ namespace Maasgroep.Database.Migrations
                     b.Property<long>("CostCentreId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CostCentreId1")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -115,8 +112,6 @@ namespace Maasgroep.Database.Migrations
 
                     b.HasIndex("CostCentreId")
                         .IsUnique();
-
-                    b.HasIndex("CostCentreId1");
 
                     b.HasIndex("StoreId")
                         .IsUnique();
@@ -154,15 +149,9 @@ namespace Maasgroep.Database.Migrations
 
             modelBuilder.Entity("Maasgroep.Database.Receipt", b =>
                 {
-                    b.HasOne("Maasgroep.Database.CostCentre", null)
+                    b.HasOne("Maasgroep.Database.CostCentre", "CostCentre")
                         .WithOne("Receipt")
                         .HasForeignKey("Maasgroep.Database.Receipt", "CostCentreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Maasgroep.Database.CostCentre", "CostCentre")
-                        .WithMany()
-                        .HasForeignKey("CostCentreId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

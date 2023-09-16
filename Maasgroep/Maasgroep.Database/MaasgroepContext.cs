@@ -38,7 +38,7 @@ namespace Maasgroep.Database
 			modelBuilder.HasSequence<long>("CostCentreSeq", schema: "receipts").StartsAt(1).IncrementsBy(1);
 			modelBuilder.Entity<CostCentre>().HasIndex(c => c.Name).IsUnique();
 			modelBuilder.Entity<CostCentre>().Property(c => c.Id).HasDefaultValueSql("nextval('receipts.\"CostCentreSeq\"')");
-			modelBuilder.Entity<CostCentre>().HasOne(c => c.Receipt).WithOne().HasForeignKey<Receipt>(r => r.CostCentreId).OnDelete(DeleteBehavior.NoAction);
+			//modelBuilder.Entity<CostCentre>().HasOne(c => c.Receipt).WithOne().HasForeignKey<Receipt>(r => r.CostCentreId).OnDelete(DeleteBehavior.NoAction);
 		}
 
 		private void CreateStore(ModelBuilder modelBuilder)
@@ -56,9 +56,6 @@ namespace Maasgroep.Database
 			modelBuilder.HasSequence<long>("ReceiptsSeq", schema: "receipts").StartsAt(1).IncrementsBy(1);
 			modelBuilder.Entity<Receipt>().Property(r => r.Created).HasDefaultValueSql("now()");
 			modelBuilder.Entity<Receipt>().Property(r => r.Id).HasDefaultValueSql("nextval('receipts.\"ReceiptsSeq\"')");
-			//modelBuilder.Entity<Receipt>().HasOne(r => r.Store).WithOne().HasForeignKey<Store>(s => s.StoreId).OnDelete(DeleteBehavior.NoAction).IsRequired();
-			//modelBuilder.Entity<Receipt>().HasOne(r => r.Store).WithOne().HasForeignKey<Store>(s => s.Id).IsRequired();
-			//modelBuilder.Entity<Receipt>().HasOne(r => r.CostCentre).WithOne().HasForeignKey<CostCentre>(c => c.Id).OnDelete(DeleteBehavior.NoAction).IsRequired();
 		}
 	}
 }

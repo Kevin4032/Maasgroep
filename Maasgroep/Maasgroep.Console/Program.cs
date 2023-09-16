@@ -8,7 +8,7 @@ namespace Maasgroep.Console
 			System.Console.WriteLine("Hello, World!");
 
 			var doeDanIets = new TestMeuk();
-			//doeDanIets.MetDezeZooi();
+			doeDanIets.MetDezeZooi();
 
 			System.Console.WriteLine("Foto erin");
 			doeDanIets.EnEenFoto();

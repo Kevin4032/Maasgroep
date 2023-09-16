@@ -94,9 +94,6 @@ namespace Maasgroep.Database.Migrations
                     b.Property<long>("CostCentreId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CostCentreId1")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -112,8 +109,6 @@ namespace Maasgroep.Database.Migrations
 
                     b.HasIndex("CostCentreId")
                         .IsUnique();
-
-                    b.HasIndex("CostCentreId1");
 
                     b.HasIndex("StoreId")
                         .IsUnique();
@@ -151,15 +146,9 @@ namespace Maasgroep.Database.Migrations
 
             modelBuilder.Entity("Maasgroep.Database.Receipt", b =>
                 {
-                    b.HasOne("Maasgroep.Database.CostCentre", null)
+                    b.HasOne("Maasgroep.Database.CostCentre", "CostCentre")
                         .WithOne("Receipt")
                         .HasForeignKey("Maasgroep.Database.Receipt", "CostCentreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Maasgroep.Database.CostCentre", "CostCentre")
-                        .WithMany()
-                        .HasForeignKey("CostCentreId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
