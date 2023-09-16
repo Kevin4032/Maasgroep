@@ -1,0 +1,6 @@
+
+
+dotnet ef migrations add 20230916_001_eersteOpzet
+dotnet ef database update
+
+
