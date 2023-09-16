@@ -1,20 +1,3 @@
 
 
-insert into declaratie."Stores"
-("Id", "Name")
-values (nextval('declaratie."Storeseq"'), 'kevinStore')
-
-insert into declaratie."CostCentres"
-("Id", "Name")
-values (nextval('declaratie."CostCentreseq"'), 'kevinCostCentre')
-
-select * from declaratie."Stores";
-select * from declaratie."CostCentres";
-
-INSERT INTO declaratie."Receipts"(
-	"Id", "DateCreated", "Amount", "StoreId", "CostCentreId", "Approved", "Location")
-	VALUES (nextval('declaratie."Photoseq"') , now(), 1, 2, 1, now(), 5.1);
-	
-	
-select * from declaratie."Receipts";
 

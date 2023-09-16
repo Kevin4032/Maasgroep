@@ -4,3 +4,17 @@ dotnet ef migrations add 20230916_001_eersteOpzet
 dotnet ef database update
 
 
+/*
+
+            migrationBuilder.CreateSequence(
+                name: "Photos",
+                schema: "photos");
+
+            migrationBuilder.CreateSequence(
+                name: "PhotoSeq",
+                schema: "receipts");
+
+
+                 Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+*/

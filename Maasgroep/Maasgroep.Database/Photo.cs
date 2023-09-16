@@ -6,7 +6,7 @@ namespace Maasgroep.Database
 	{
 		[Key]
 		public long Id { get; set; }
-		public Receipt Receipt { get; set; }
+		public Receipt? Receipt { get; set; }
 
 		public DateTime Created { get; set; }
 
