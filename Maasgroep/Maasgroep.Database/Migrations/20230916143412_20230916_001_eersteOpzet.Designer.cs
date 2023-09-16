@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Maasgroep.Database.Migrations
 {
     [DbContext(typeof(MaasgroepContext))]
-    [Migration("20230916142024_20230916_001_eersteOpzet")]
+    [Migration("20230916143412_20230916_001_eersteOpzet")]
     partial class _20230916_001_eersteOpzet
     {
         /// <inheritdoc />
@@ -94,7 +94,7 @@ namespace Maasgroep.Database.Migrations
                     b.Property<DateTime?>("Approved")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("CostCentreId")
+                    b.Property<long?>("CostCentreId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
@@ -105,16 +105,14 @@ namespace Maasgroep.Database.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("text");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CostCentreId")
-                        .IsUnique();
+                    b.HasIndex("CostCentreId");
 
-                    b.HasIndex("StoreId")
-                        .IsUnique();
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Receipts", "receipts");
                 });
@@ -150,30 +148,16 @@ namespace Maasgroep.Database.Migrations
             modelBuilder.Entity("Maasgroep.Database.Receipt", b =>
                 {
                     b.HasOne("Maasgroep.Database.CostCentre", "CostCentre")
-                        .WithOne("Receipt")
-                        .HasForeignKey("Maasgroep.Database.Receipt", "CostCentreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("CostCentreId");
 
                     b.HasOne("Maasgroep.Database.Store", "Store")
-                        .WithOne("Receipt")
-                        .HasForeignKey("Maasgroep.Database.Receipt", "StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("StoreId");
 
                     b.Navigation("CostCentre");
 
                     b.Navigation("Store");
-                });
-
-            modelBuilder.Entity("Maasgroep.Database.CostCentre", b =>
-                {
-                    b.Navigation("Receipt");
-                });
-
-            modelBuilder.Entity("Maasgroep.Database.Store", b =>
-                {
-                    b.Navigation("Receipt");
                 });
 #pragma warning restore 612, 618
         }

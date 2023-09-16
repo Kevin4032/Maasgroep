@@ -67,8 +67,8 @@ namespace Maasgroep.Database.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "nextval('receipts.\"ReceiptsSeq\"')"),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     Amount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false),
-                    CostCentreId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: true),
+                    CostCentreId = table.Column<long>(type: "bigint", nullable: true),
                     Approved = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Location = table.Column<string>(type: "text", nullable: true)
                 },
@@ -80,15 +80,13 @@ namespace Maasgroep.Database.Migrations
                         column: x => x.CostCentreId,
                         principalSchema: "receipts",
                         principalTable: "CostCentre",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Receipts_Store_StoreId",
                         column: x => x.StoreId,
                         principalSchema: "receipts",
                         principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -130,15 +128,13 @@ namespace Maasgroep.Database.Migrations
                 name: "IX_Receipts_CostCentreId",
                 schema: "receipts",
                 table: "Receipts",
-                column: "CostCentreId",
-                unique: true);
+                column: "CostCentreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Receipts_StoreId",
                 schema: "receipts",
                 table: "Receipts",
-                column: "StoreId",
-                unique: true);
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Store_Name",

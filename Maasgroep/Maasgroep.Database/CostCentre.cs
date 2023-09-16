@@ -7,6 +7,5 @@ namespace Maasgroep.Database
 		[Key]
 		public long Id { get; set; }
 		public string Name { get; set; } //Unique constraint in Builder.
-		public Receipt? Receipt { get; set; }
 	}
 }
