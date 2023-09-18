@@ -2,7 +2,7 @@
 
 namespace Maasgroep.Database
 {
-	public class CostCentre
+	public record CostCentre
 	{
 		[Key]
 		public long Id { get; set; }

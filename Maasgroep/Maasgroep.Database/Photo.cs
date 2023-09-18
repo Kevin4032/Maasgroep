@@ -2,7 +2,7 @@
 
 namespace Maasgroep.Database
 {
-	public class Photo
+	public record Photo
 	{
 		[Key]
 		public long Id { get; set; }

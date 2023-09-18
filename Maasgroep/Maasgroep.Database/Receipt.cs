@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Maasgroep.Database
 {
-	public class Receipt
+	public record Receipt
 	{
 		[Key]
 		public long Id { get; set; }
@@ -16,7 +16,7 @@ namespace Maasgroep.Database
 		public CostCentre? CostCentre { get; set; }
 		//[ForeignKey("CostCentre")]
 		//public long CostCentreId { get; set; } // Helaas nodig voor Foreign key Relationship
-		public DateTime? Approved { get; set; }
+		public ReceiptStatus Status { get; set; }
 		public string? Location { get; set; }//TODO: Kevin; GPS zie ik nog even niet vliegen?
 
 	}

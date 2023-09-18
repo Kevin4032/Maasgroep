@@ -5,11 +5,13 @@ namespace Maasgroep.Database
 {
 	public class MaasgroepContext : DbContext
 	{
-		public DbSet<Receipt> Receipts { get; set; }
-		public DbSet<Photo> Photos { get; set; }
-		public DbSet<Store> Stores { get; set; }
-		public DbSet<CostCentre> CostCentres { get; set; }
-
+		public DbSet<Receipt> Receipt { get; set; }
+		public DbSet<ReceiptApproval> ReceiptApproval { get; set; }
+		public DbSet<ReceiptStatus> ReceiptStatus { get; set; }
+		public DbSet<Photo> Photo { get; set; }
+		public DbSet<Store> Store { get; set; }
+		public DbSet<CostCentre> CostCentre { get; set; }
+		public DbSet<MaasgroepMember> MaasgroepMember { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -19,17 +21,20 @@ namespace Maasgroep.Database
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{			
 			CreateCostCentre(modelBuilder);
-			CreateStore(modelBuilder);			
+			CreateStore(modelBuilder);
+			CreateReceiptApproval(modelBuilder);
+			CreateReceiptStatus(modelBuilder);
 			CreateReceipt(modelBuilder);
 			CreatePhoto(modelBuilder);
+			CreateMaasgroepMember(modelBuilder);
 		}
 
 		private void CreatePhoto(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Photo>().ToTable("Photos", "photos");
-			modelBuilder.HasSequence<long>("PhotosSeq", schema: "photos").StartsAt(1).IncrementsBy(1);
+			modelBuilder.Entity<Photo>().ToTable("Photo", "photos");
+			modelBuilder.HasSequence<long>("PhotoSeq", schema: "photos").StartsAt(1).IncrementsBy(1);
 			modelBuilder.Entity<Photo>().Property(p => p.Created).HasDefaultValueSql("now()");
-			modelBuilder.Entity<Photo>().Property(p => p.Id).HasDefaultValueSql("nextval('photos.\"PhotosSeq\"')");
+			modelBuilder.Entity<Photo>().Property(p => p.Id).HasDefaultValueSql("nextval('photos.\"PhotoSeq\"')");
 		}
 
 		private void CreateCostCentre(ModelBuilder modelBuilder)
@@ -50,10 +55,32 @@ namespace Maasgroep.Database
 
 		private void CreateReceipt(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Receipt>().ToTable("Receipts", "receipts");
-			modelBuilder.HasSequence<long>("ReceiptsSeq", schema: "receipts").StartsAt(1).IncrementsBy(1);
+			modelBuilder.Entity<Receipt>().ToTable("Receipt", "receipts");
+			modelBuilder.HasSequence<long>("ReceiptSeq", schema: "receipts").StartsAt(1).IncrementsBy(1);
 			modelBuilder.Entity<Receipt>().Property(r => r.Created).HasDefaultValueSql("now()");
-			modelBuilder.Entity<Receipt>().Property(r => r.Id).HasDefaultValueSql("nextval('receipts.\"ReceiptsSeq\"')");
+			modelBuilder.Entity<Receipt>().Property(r => r.Id).HasDefaultValueSql("nextval('receipts.\"ReceiptSeq\"')");
+		}
+
+		private void CreateReceiptApproval(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<ReceiptApproval>().ToTable("Approval", "receipts");
+			modelBuilder.HasSequence<long>("ReceiptApprovalSeq", schema: "receipts").StartsAt(1).IncrementsBy(1);
+			modelBuilder.Entity<ReceiptApproval>().Property(r => r.Approved).HasDefaultValueSql("now()");
+		}
+
+		private void CreateReceiptStatus(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<ReceiptStatus>().ToTable("Status", "receipts");
+			modelBuilder.HasSequence<short>("ReceiptStatusSeq", schema: "receipts").StartsAt(1).IncrementsBy(1);
+			modelBuilder.Entity<ReceiptStatus>().Property(r => r.Id).HasDefaultValueSql("nextval('receipts.\"ReceiptStatusSeq\"')");
+		}
+
+		private void CreateMaasgroepMember(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<MaasgroepMember>().ToTable("Member", "admin");
+			modelBuilder.HasSequence<long>("MemberSeq", schema: "admin").StartsAt(1).IncrementsBy(1);
+			modelBuilder.Entity<MaasgroepMember>().Property(m => m.Id).HasDefaultValueSql("nextval('admin.\"MemberSeq\"')");
+			modelBuilder.Entity<MaasgroepMember>().HasIndex(m => m.Name).IsUnique();
 		}
 	}
 }

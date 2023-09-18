@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Maasgroep.Database
 {
-	public class Store
+	public record Store
 	{
 		[Key]
 		public long Id { get; set; }
